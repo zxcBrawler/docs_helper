@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  go_router: ^15.1.3
+  lucide_icons: ^0.257.0
   responsive_builder: ^0.7.1
 
 dev_dependencies:
