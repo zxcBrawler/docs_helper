@@ -11,8 +11,8 @@ class History extends StatefulWidget {
 class _HistoryState extends State<History> {
   @override
   Widget build(BuildContext context) {
-    return const Center(
-        child: Text('History',
-            style: TextStyle(color: AppColor.textColor, fontSize: 34)));
+    return Container(
+      color: AppColor.mainAccentColor,
+    );
   }
 }

@@ -1,4 +1,4 @@
-enum AppPages { main, mainContent, dashboard, history, help }
+enum AppPages { main, dashboard, history, help, settings, newDocument, profile }
 
 extension AppPageExtension on AppPages {
   String get path {
@@ -11,8 +11,12 @@ extension AppPageExtension on AppPages {
         return '/help';
       case AppPages.main:
         return '/';
-      case AppPages.mainContent:
-        return '/mainContent';
+      case AppPages.settings:
+        return '/settings';
+      case AppPages.newDocument:
+        return '/newDocument';
+      case AppPages.profile:
+        return '/profile';
     }
   }
 }
@@ -28,8 +32,13 @@ extension AppPageExtensionRouteName on AppPages {
         return 'Help & support';
       case AppPages.main:
         return 'Main';
-      case AppPages.mainContent:
-        return 'MainContent';
+
+      case AppPages.settings:
+        return 'Settings';
+      case AppPages.newDocument:
+        return 'Add new document';
+      case AppPages.profile:
+        return 'Profile';
     }
   }
 }

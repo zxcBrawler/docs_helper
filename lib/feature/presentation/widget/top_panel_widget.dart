@@ -1,6 +1,8 @@
 import 'package:docs_helper/config/app_constants.dart';
 import 'package:docs_helper/config/colors/colors.dart';
 import 'package:docs_helper/core/custom_widgets/basic_icon_button.dart';
+import 'package:docs_helper/core/routes/app_router.dart';
+import 'package:docs_helper/core/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
@@ -49,12 +51,16 @@ class _TopBarWidgetState extends State<TopBarWidget> {
                       children: [
                         BasicIconButton(
                             icon: const Icon(LucideIcons.plus),
-                            onPressed: () {},
+                            onPressed: () {
+                              router.push(AppPages.newDocument.path);
+                            },
                             tooltip: 'Add new document'),
                         BasicIconButton(
-                            icon: const Icon(LucideIcons.settings2),
-                            onPressed: () {},
-                            tooltip: 'Settings'),
+                            icon: const Icon(LucideIcons.user),
+                            onPressed: () {
+                              router.push(AppPages.profile.path);
+                            },
+                            tooltip: 'Profile'),
                       ],
                     ),
                   ],

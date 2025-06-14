@@ -3,7 +3,6 @@ import 'package:docs_helper/config/colors/colors.dart';
 import 'package:docs_helper/core/menu_items/main_menu_items.dart';
 import 'package:docs_helper/core/routes/app_router.dart';
 import 'package:flutter/material.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 class LeftNavigationPanel extends StatefulWidget {
   const LeftNavigationPanel({super.key});
@@ -29,7 +28,7 @@ class _LeftNavigationPanelState extends State<LeftNavigationPanel> {
             children: [
               Expanded(
                 child: ListView.builder(
-                  itemCount: menuItems().length,
+                  itemCount: menuItems.length,
                   itemBuilder: (context, index) {
                     final isSelected = index == _selectedIndex;
                     final isHovered = index == _hoveredIndex;
@@ -41,7 +40,7 @@ class _LeftNavigationPanelState extends State<LeftNavigationPanel> {
                         child: GestureDetector(
                           onTap: () => setState(() {
                             _selectedIndex = index;
-                            router.go(menuItems()[index]['route']);
+                            router.go(menuItems[index]['route']);
                           }),
                           child: Container(
                             decoration: BoxDecoration(
@@ -59,13 +58,13 @@ class _LeftNavigationPanelState extends State<LeftNavigationPanel> {
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Icon(
-                                    menuItems()[index]['icon'],
+                                    menuItems[index]['icon'],
                                     color: applyMenuItemStyle(
                                         isSelected, isHovered),
                                   ),
                                 ),
                                 Text(
-                                  menuItems()[index]['title'],
+                                  menuItems[index]['title'],
                                   style: TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -80,31 +79,6 @@ class _LeftNavigationPanelState extends State<LeftNavigationPanel> {
                       ),
                     );
                   },
-                ),
-              ),
-              const Spacer(),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: SizedBox(
-                  height: 50,
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Icon(
-                          LucideIcons.doorOpen,
-                          color: AppColor.iconColor,
-                        ),
-                      ),
-                      Text(
-                        "Close app",
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: AppColor.iconColor,
-                            fontWeight: FontWeight.bold),
-                      )
-                    ],
-                  ),
                 ),
               ),
             ],

@@ -1,8 +1,11 @@
 import 'package:docs_helper/core/routes/routes.dart';
-import 'package:docs_helper/feature/presentation/ui/dashboard.dart';
-import 'package:docs_helper/feature/presentation/ui/desktop_layout.dart';
-import 'package:docs_helper/feature/presentation/ui/help.dart';
-import 'package:docs_helper/feature/presentation/ui/history.dart';
+import 'package:docs_helper/feature/presentation/ui/new_document_screen.dart';
+import 'package:docs_helper/feature/presentation/ui/pages/dashboard.dart';
+import 'package:docs_helper/feature/presentation/ui/main_screen.dart';
+import 'package:docs_helper/feature/presentation/ui/pages/help.dart';
+import 'package:docs_helper/feature/presentation/ui/pages/history.dart';
+import 'package:docs_helper/feature/presentation/ui/pages/settings.dart';
+import 'package:docs_helper/feature/presentation/ui/profle.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -13,27 +16,40 @@ final router = GoRouter(
   initialLocation: AppPages.dashboard.path,
   navigatorKey: _rootNavigatorKey,
   routes: [
+    GoRoute(
+      path: AppPages.newDocument.path,
+      name: AppPages.newDocument.name,
+      builder: (_, __) => const NewDocumentScreen(),
+    ),
+    GoRoute(
+      path: AppPages.profile.path,
+      name: AppPages.profile.name,
+      builder: (_, __) => const Profile(),
+    ),
     ShellRoute(
       navigatorKey: _shellNavigatorKey,
-      builder: (context, state, child) => DesktopLayout(child: child),
+      builder: (_, __, child) => MainScreen(child: child),
       routes: [
         GoRoute(
           path: AppPages.dashboard.path,
           name: AppPages.dashboard.name,
-          pageBuilder: (context, state) =>
-              const NoTransitionPage(child: Dashboard()),
+          pageBuilder: (_, __) => const NoTransitionPage(child: Dashboard()),
         ),
         GoRoute(
           path: AppPages.history.path,
           name: AppPages.history.name,
-          pageBuilder: (context, state) =>
-              const NoTransitionPage(child: History()),
+          pageBuilder: (_, __) => const NoTransitionPage(child: History()),
         ),
         GoRoute(
           path: AppPages.help.path,
           name: AppPages.help.name,
-          pageBuilder: (context, state) =>
+          pageBuilder: (_, __) =>
               const NoTransitionPage(child: HelpAndSupport()),
+        ),
+        GoRoute(
+          path: AppPages.settings.path,
+          name: AppPages.settings.name,
+          pageBuilder: (_, __) => const NoTransitionPage(child: Settings()),
         ),
       ],
     ),

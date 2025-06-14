@@ -1,19 +1,18 @@
 import 'package:docs_helper/config/app_constants.dart';
 import 'package:docs_helper/config/colors/colors.dart';
 import 'package:docs_helper/feature/presentation/widget/left_navigation_widget.dart';
-import 'package:docs_helper/feature/presentation/widget/main_content_widget.dart';
 import 'package:docs_helper/feature/presentation/widget/top_panel_widget.dart';
 import 'package:flutter/material.dart';
 
-class DesktopLayout extends StatefulWidget {
+class MainScreen extends StatefulWidget {
   final Widget child;
-  const DesktopLayout({super.key, required this.child});
+  const MainScreen({super.key, required this.child});
 
   @override
-  State<DesktopLayout> createState() => _DesktopLayoutState();
+  State<MainScreen> createState() => _MainScreenState();
 }
 
-class _DesktopLayoutState extends State<DesktopLayout> {
+class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +29,11 @@ class _DesktopLayoutState extends State<DesktopLayout> {
                   const SizedBox(
                     width: 10,
                   ),
-                  Expanded(child: MainContentWidget(child: widget.child))
+                  Expanded(
+                    child: Container(
+                      child: widget.child,
+                    ),
+                  )
                 ],
               ),
             ),

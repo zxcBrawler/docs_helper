@@ -11,8 +11,8 @@ class HelpAndSupport extends StatefulWidget {
 class _HelpAndSupportState extends State<HelpAndSupport> {
   @override
   Widget build(BuildContext context) {
-    return const Center(
-        child: Text('HelpAndSupport',
-            style: TextStyle(color: AppColor.textColor, fontSize: 34)));
+    return Container(
+      color: AppColor.secondaryBackground,
+    );
   }
 }
