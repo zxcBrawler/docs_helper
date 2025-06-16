@@ -3,42 +3,32 @@ import 'package:docs_helper/config/colors/colors.dart';
 import 'package:flutter/material.dart';
 
 class FileExtensionList extends StatefulWidget {
-  final List<String> extensions;
+  final Map<String, int> extensions;
   const FileExtensionList({super.key, required this.extensions});
-  static const allowedExtensions = {
-    '.axaml', // XAML
-    '.xaml', // XAML
-    '.cs', // C#
-    '.dart', // Dart
-    '.java', // Java
-    '.kt', // Kotlin
-    '.swift', // Swift
-    '.go', // Go
-    '.rs', // Rust
-    '.py', // Python
-    '.js', // JavaScript
-    '.ts', // TypeScript
-    '.php', // PHP
-    '.rb', // Ruby
-    '.sh', // Shell script
-    '.c', // C
-    '.cpp', // C++
-    '.h', // C/C++ header
-    '.m', // Objective-C
-    '.html', // HTML
-    '.css', // CSS
-  };
+
   @override
   State<FileExtensionList> createState() => _FileExtensionListState();
 }
 
 class _FileExtensionListState extends State<FileExtensionList> {
-  // Track selected extensions
   final Set<String> _selectedExtensions = {};
 
-  List<String> get _filteredExtensions => widget.extensions
-      .where((ext) => FileExtensionList.allowedExtensions.contains(ext))
-      .toList();
+  List<MapEntry<String, int>> get _filteredExtensions {
+    return widget.extensions.entries
+        .where((entry) => AppConstants.allowedExtensions.contains(entry.key))
+        .toList()
+      ..sort((a, b) => a.key.compareTo(b.key));
+  }
+
+  int get _totalAllowedFiles {
+    return _filteredExtensions.fold(0, (sum, entry) => sum + entry.value);
+  }
+
+  int get _selectedFilesCount {
+    return _filteredExtensions
+        .where((entry) => _selectedExtensions.contains(entry.key))
+        .fold(0, (sum, entry) => sum + entry.value);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,9 +55,12 @@ class _FileExtensionListState extends State<FileExtensionList> {
                     ),
                   ),
                   Text(
-                    '${_selectedExtensions.length}/${_filteredExtensions.length} selected',
+                    '${_selectedExtensions.length} extensions selected\n'
+                    '$_selectedFilesCount of $_totalAllowedFiles files',
+                    textAlign: TextAlign.end,
                     style: const TextStyle(
-                      color: Colors.grey,
+                      color: AppColor.iconColor,
+                      fontSize: 14,
                     ),
                   ),
                 ],
@@ -77,24 +70,33 @@ class _FileExtensionListState extends State<FileExtensionList> {
               child: ListView.builder(
                 itemCount: _filteredExtensions.length,
                 itemBuilder: (context, index) {
-                  final extension = _filteredExtensions[index];
+                  final entry = _filteredExtensions[index];
+                  final extension = entry.key;
+                  final count = entry.value;
 
                   return ListTile(
                     leading: Checkbox(
-                        activeColor: AppColor.mainAccentColor,
-                        value: _selectedExtensions.contains(extension),
-                        onChanged: (bool? value) {
-                          setState(() {
-                            if (value == true) {
-                              _selectedExtensions.add(extension);
-                            } else {
-                              _selectedExtensions.remove(extension);
-                            }
-                          });
-                        }),
+                      activeColor: AppColor.mainAccentColor,
+                      value: _selectedExtensions.contains(extension),
+                      onChanged: (bool? value) {
+                        setState(() {
+                          if (value == true) {
+                            _selectedExtensions.add(extension);
+                          } else {
+                            _selectedExtensions.remove(extension);
+                          }
+                        });
+                      },
+                    ),
                     title: Text(
                       extension,
-                      style: const TextStyle(color: AppColor.textColor),
+                    ),
+                    trailing: Text(
+                      '$count file${count == 1 ? '' : 's'}',
+                      style: const TextStyle(
+                        color: AppColor.iconColor,
+                        fontSize: 14,
+                      ),
                     ),
                   );
                 },
@@ -111,28 +113,15 @@ class _FileExtensionListState extends State<FileExtensionList> {
                         _selectedExtensions.clear();
                       });
                     },
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text(
-                        'Clear all',
-                        style:
-                            TextStyle(color: AppColor.textColor, fontSize: 16),
-                      ),
+                    child: const Text(
+                      'Clear all',
                     ),
                   ),
                   const SizedBox(width: 16),
                   ElevatedButton(
-                    style: ButtonStyle(
-                        backgroundColor:
-                            WidgetStateProperty.all(AppColor.mainAccentColor)),
                     onPressed: _selectedExtensions.isEmpty ? null : () {},
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Text('Export selected',
-                          style: TextStyle(
-                            color: AppColor.textColor,
-                            fontSize: 16,
-                          )),
+                    child: const Text(
+                      'Export selected',
                     ),
                   ),
                 ],

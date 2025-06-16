@@ -14,6 +14,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^9.1.1
+  flutter_highlight: ^0.7.0
   get_it: ^8.0.3
   go_router: ^15.1.3
   lucide_icons: ^0.257.0
@@ -27,3 +28,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: RobotoMono
+      fonts:
+        - asset: assets/fonts/RobotoMono-VariableFont_wght.ttf

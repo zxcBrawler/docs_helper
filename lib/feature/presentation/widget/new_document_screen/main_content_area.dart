@@ -29,8 +29,8 @@ Widget buildMainContentArea(FileState state, BuildContext context) {
   );
 }
 
-List<String> getFileExtensionsList(DirectoryNode node) {
-  final extensions = <String>{};
+Map<String, int> getFileExtensionsList(DirectoryNode node) {
+  final extensions = <String, int>{};
 
   void traverse(DirectoryNode currentNode) {
     if (currentNode.isDirectory) {
@@ -40,11 +40,14 @@ List<String> getFileExtensionsList(DirectoryNode node) {
     } else {
       final extension = path.extension(currentNode.path).toLowerCase();
       if (extension.isNotEmpty) {
-        extensions.add(extension);
+        extensions[extension] = (extensions[extension] ?? 0) + 1;
       }
     }
   }
 
   traverse(node);
-  return extensions.toList()..sort();
+
+  final sortedKeys = extensions.keys.toList()..sort();
+  final sortedMap = {for (var key in sortedKeys) key: extensions[key]!};
+  return sortedMap;
 }

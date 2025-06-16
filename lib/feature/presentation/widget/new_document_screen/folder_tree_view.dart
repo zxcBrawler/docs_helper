@@ -1,8 +1,11 @@
-import 'package:dev_icons/dev_icons.dart';
+import 'dart:io';
+
+import 'package:docs_helper/config/app_constants.dart';
 import 'package:docs_helper/config/colors/colors.dart';
 import 'package:docs_helper/feature/data/model/directory.dart';
 import 'package:docs_helper/feature/presentation/bloc/file/file_bloc.dart';
 import 'package:docs_helper/feature/presentation/bloc/file/file_event.dart';
+import 'package:docs_helper/feature/presentation/widget/new_document_screen/file_content_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons/lucide_icons.dart';
@@ -39,8 +42,8 @@ Widget buildTreeView(List<DirectoryNode> nodes, BuildContext context,
                 trailing: node.children.isNotEmpty
                     ? Icon(
                         node.isExpanded
-                            ? Icons.keyboard_arrow_down
-                            : Icons.keyboard_arrow_right,
+                            ? LucideIcons.chevronDown
+                            : LucideIcons.chevronRight,
                       )
                     : null,
                 onTap: () {
@@ -61,11 +64,11 @@ Widget buildTreeView(List<DirectoryNode> nodes, BuildContext context,
             hoverColor: Colors.transparent,
             contentPadding: EdgeInsets.only(left: 16.0 * depth + 40.0),
             leading: Icon(
-              getFileIcon(path.extension(node.path)),
+              AppConstants.getFileIcon(path.extension(node.path)),
               color: AppColor.iconColor,
             ),
             title: Text(node.name),
-            onTap: () {},
+            onTap: () => _showFileContent(context, node),
           );
         }
       }).toList(),
@@ -73,23 +76,28 @@ Widget buildTreeView(List<DirectoryNode> nodes, BuildContext context,
   );
 }
 
-IconData getFileIcon(String extension) {
-  switch (extension.toLowerCase()) {
-    case '.cs':
-      return DevIcons.csharpPlain;
-    case '.java':
-      return DevIcons.javaPlain;
-    case '.py':
-      return DevIcons.pythonPlain;
-    case '.js':
-      return DevIcons.javascriptPlain;
-    case '.html':
-      return DevIcons.html5Plain;
-    case '.css':
-      return DevIcons.css3Plain;
-    case '.dart':
-      return DevIcons.dartPlain;
-    default:
-      return LucideIcons.fileText;
+Future<void> _showFileContent(BuildContext context, DirectoryNode node) async {
+  try {
+    final content = await File(node.path).readAsString();
+    if (!context.mounted) return;
+
+    if (context.mounted) {
+      await showDialog(
+        context: context,
+        builder: (context) => FileContentDialog(
+          fileName: node.name,
+          content: content,
+          extension: path.extension(node.path),
+        ),
+      );
+    }
+  } catch (e) {
+    if (context.mounted) Navigator.of(context).pop();
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text('Cannot preview ${path.extension(node.path)} file ')),
+      );
+    }
   }
 }

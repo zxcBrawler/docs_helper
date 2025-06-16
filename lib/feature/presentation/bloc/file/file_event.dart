@@ -11,6 +11,10 @@ class PickFolderEvent extends FileEvent {
 
 class ToggleDirectoryExpansionEvent extends FileEvent {
   final DirectoryNode directoryNode;
-
   const ToggleDirectoryExpansionEvent(this.directoryNode);
+}
+
+class ShowFileContentEvent extends FileEvent {
+  final DirectoryNode node;
+  const ShowFileContentEvent(this.node);
 }

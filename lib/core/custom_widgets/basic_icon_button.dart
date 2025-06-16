@@ -1,4 +1,3 @@
-import 'package:docs_helper/config/colors/colors.dart';
 import 'package:flutter/material.dart';
 
 class BasicIconButton extends StatelessWidget {
@@ -11,7 +10,6 @@ class BasicIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      color: AppColor.iconColor,
       onPressed: onPressed,
       icon: icon,
       tooltip: tooltip,

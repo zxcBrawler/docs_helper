@@ -34,10 +34,8 @@ class _TopBarWidgetState extends State<TopBarWidget> {
                   children: [
                     Text(
                       'Docs Helper',
-                      style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: AppColor.textColor),
+                      style:
+                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                     )
                   ],
                 ),

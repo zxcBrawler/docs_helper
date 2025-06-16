@@ -12,15 +12,30 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
-    return Scrollbar(
-      child: Column(
-        children: [
-          Expanded(
-              child: Row(
+    return Column(
+      children: [
+        Expanded(
+            child: Row(
+          children: [
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: AppColor.secondaryBackground,
+                    borderRadius: AppConstants.deaultElementBorderRadius,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        )),
+        Expanded(
+          child: Row(
             children: [
               Expanded(
                 child: Padding(
-                  padding: const EdgeInsets.only(bottom: 10),
+                  padding: const EdgeInsets.only(right: 10),
                   child: Container(
                     decoration: const BoxDecoration(
                       color: AppColor.secondaryBackground,
@@ -29,34 +44,9 @@ class _DashboardState extends State<Dashboard> {
                   ),
                 ),
               ),
-            ],
-          )),
-          Expanded(
-            child: Row(
-              children: [
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color: AppColor.secondaryBackground,
-                        borderRadius: AppConstants.deaultElementBorderRadius,
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        color: AppColor.secondaryBackground,
-                        borderRadius: AppConstants.deaultElementBorderRadius,
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 10),
                   child: Container(
                     decoration: const BoxDecoration(
                       color: AppColor.secondaryBackground,
@@ -64,11 +54,19 @@ class _DashboardState extends State<Dashboard> {
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+              Expanded(
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: AppColor.secondaryBackground,
+                    borderRadius: AppConstants.deaultElementBorderRadius,
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

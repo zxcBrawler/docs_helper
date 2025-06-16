@@ -44,15 +44,11 @@ class _NewDocumentView extends StatelessWidget {
                 BlocBuilder<FileBloc, FileState>(
                   builder: (context, state) {
                     return ElevatedButton(
-                      style: ButtonStyle(
-                          backgroundColor: WidgetStateProperty.all(
-                              AppColor.mainAccentColor)),
                       onPressed: () {
                         context.read<FileBloc>().add(const PickFolderEvent());
                       },
                       child: const Text(
                         'Pick Folder',
-                        style: TextStyle(color: Colors.white),
                       ),
                     );
                   },
@@ -60,31 +56,38 @@ class _NewDocumentView extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 20),
-            BlocConsumer<FileBloc, FileState>(
-              listener: (context, state) {
-                if (state is FileError) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(state.error!)),
-                  );
-                }
-              },
-              builder: (context, state) {
-                switch (state) {
-                  case FileLoading _:
-                    return const Center(
-                        child: CircularProgressIndicator(
-                      color: AppColor.mainAccentColor,
-                    ));
-                  case DirectoryTreeBuildDone _:
-                    return buildMainContentArea(state, context);
-                  case FileError _:
-                    return const Center(child: Text('Error'));
-                  default:
-                    return const Center(
-                      child: Text('Select a folder to view its contents'),
-                    );
-                }
-              },
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  BlocConsumer<FileBloc, FileState>(
+                    listener: (context, state) {},
+                    builder: (context, state) {
+                      switch (state) {
+                        case FileLoading _:
+                          return const Center(
+                              child: CircularProgressIndicator(
+                            color: AppColor.mainAccentColor,
+                          ));
+                        case DirectoryTreeBuildDone _:
+                          return buildMainContentArea(state, context);
+                        case FileError _:
+                          return const Center(
+                            child: Text('Folder is not picked',
+                                style: TextStyle(fontSize: 20)),
+                          );
+                        default:
+                          return const Center(
+                            child: Text('Select a folder to export to Word',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                )),
+                          );
+                      }
+                    },
+                  ),
+                ],
+              ),
             ),
           ],
         ),
