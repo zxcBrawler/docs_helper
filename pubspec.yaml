@@ -9,6 +9,7 @@ environment:
 dependencies:
  
   dev_icons: ^1.0.0
+  docx_viewer: ^0.2.1
   file_picker: ^10.2.0
   fl_chart: ^1.0.0
   flutter:

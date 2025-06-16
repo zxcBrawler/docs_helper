@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:docs_helper/config/app_constants.dart';
 import 'package:docs_helper/config/colors/colors.dart';
+import 'package:docs_helper/config/colors/icon_colors.dart';
 import 'package:docs_helper/feature/data/model/directory.dart';
 import 'package:docs_helper/feature/presentation/bloc/file/file_bloc.dart';
 import 'package:docs_helper/feature/presentation/bloc/file/file_event.dart';
@@ -64,8 +65,9 @@ Widget buildTreeView(List<DirectoryNode> nodes, BuildContext context,
             hoverColor: Colors.transparent,
             contentPadding: EdgeInsets.only(left: 16.0 * depth + 40.0),
             leading: Icon(
-              AppConstants.getFileIcon(path.extension(node.path)),
-              color: AppColor.iconColor,
+              size: 24,
+              IconsConfig.getFileIcon(path.extension(node.path)),
+              color: AppConstants.getFileIconColor(path.extension(node.path)),
             ),
             title: Text(node.name),
             onTap: () => _showFileContent(context, node),
@@ -92,11 +94,12 @@ Future<void> _showFileContent(BuildContext context, DirectoryNode node) async {
       );
     }
   } catch (e) {
-    if (context.mounted) Navigator.of(context).pop();
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-            content: Text('Cannot preview ${path.extension(node.path)} file ')),
+          content: Text('Cannot preview ${path.extension(node.path)} file '),
+          duration: const Duration(seconds: 2),
+        ),
       );
     }
   }
