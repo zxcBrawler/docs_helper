@@ -7,6 +7,7 @@ import 'package:docs_helper/feature/presentation/bloc/export/export_event.dart';
 import 'package:docs_helper/feature/presentation/bloc/export/export_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 
 class FileExtensionList extends StatelessWidget {
   final Map<String, int> extensions;
@@ -149,14 +150,27 @@ class FileExtensionList extends StatelessWidget {
                                             ),
                                           );
                                     },
-                          child: state is ExportInProgress
-                              ? const SizedBox(
-                                  width: 20,
-                                  height: 20,
-                                  child: CircularProgressIndicator(),
-                                )
-                              : const Text('Export selected'),
-                        ),
+                          child: SizedBox(
+                            width: 100,
+                            child: AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 300),
+                              child: state is ExportInProgress
+                                  ? const SizedBox(
+                                      width: 20,
+                                      height: 20,
+                                      child: CircularProgressIndicator(),
+                                    )
+                                  : state is ExportSuccess
+                                      ? const Icon(
+                                          LucideIcons.check,
+                                          size: 20,
+                                        )
+                                      : const Text(
+                                          'Export',
+                                        ),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                   ),

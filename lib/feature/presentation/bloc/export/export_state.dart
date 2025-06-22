@@ -7,8 +7,7 @@ abstract class ExportState {
 }
 
 class ExportInitial extends ExportState {
-  const ExportInitial()
-      : super(isExporting: false, selectedExtensions: const {});
+  const ExportInitial();
 }
 
 class ExportCancelled extends ExportState {
@@ -21,7 +20,8 @@ class ExportExtensionsUpdated extends ExportState {
 }
 
 class ExportInProgress extends ExportState {
-  const ExportInProgress() : super(isExporting: true);
+  const ExportInProgress(Set<String> selectedExtensions)
+      : super(isExporting: true, selectedExtensions: selectedExtensions);
 }
 
 class ExportSuccess extends ExportState {

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:docs_helper/feature/data/model/directory.dart';
@@ -13,6 +14,7 @@ import 'package:path/path.dart' as p;
 import 'package:pdf/widgets.dart' as pw;
 
 class ExportBloc extends Bloc<ExportEvent, ExportState> {
+  Timer? _resetTimer;
   ExportBloc() : super(const ExportInitial()) {
     on<ExportFilesByExtensions>(_onExportFilesByExtensions);
     on<ToggleExtensionSelection>(_onToggleExtensionSelection);
@@ -23,7 +25,7 @@ class ExportBloc extends Bloc<ExportEvent, ExportState> {
     ClearSelection event,
     Emitter<ExportState> emit,
   ) {
-    emit(const ExportExtensionsUpdated({}));
+    emit(const ExportInitial());
   }
 
   void _onToggleExtensionSelection(
@@ -47,6 +49,7 @@ class ExportBloc extends Bloc<ExportEvent, ExportState> {
     Emitter<ExportState> emit,
   ) async {
     try {
+      emit(ExportInProgress(event.extensions));
       final savePath = await FilePicker.platform.saveFile(
         dialogTitle: 'Save PDF Export',
         fileName: 'code_export_${DateTime.now().millisecondsSinceEpoch}.pdf',
@@ -79,7 +82,6 @@ class ExportBloc extends Bloc<ExportEvent, ExportState> {
         return;
       }
 
-      emit(const ExportInProgress());
       final pdfFile = await _createCodePdf(
         filePaths: codeFiles,
         savePath: savePath,
@@ -87,6 +89,10 @@ class ExportBloc extends Bloc<ExportEvent, ExportState> {
       OpenFile.open(pdfFile.path);
 
       emit(ExportSuccess(codeFiles.length, savePath));
+
+      _resetTimer?.cancel();
+      _resetTimer =
+          Timer(const Duration(seconds: 2), () => add(ClearSelection()));
     } catch (e) {
       emit(ExportError('PDF export failed: ${e.toString()}'));
     }
@@ -166,10 +172,14 @@ class ExportBloc extends Bloc<ExportEvent, ExportState> {
         },
       ),
     );
-
-    // Save to temporary file
     final outputFile = File(savePath!);
     await outputFile.writeAsBytes(await pdf.save());
     return outputFile;
+  }
+
+  @override
+  Future<void> close() {
+    _resetTimer?.cancel();
+    return super.close();
   }
 }
