@@ -68,7 +68,6 @@ class FileContentDialog extends StatelessWidget {
                       )
                     : IconButton(
                         icon: const Icon(LucideIcons.copy),
-                        color: AppColor.iconColor,
                         onPressed: () {
                           context.read<ClipboardBloc>().add(
                                 CopyToClipboard(content),

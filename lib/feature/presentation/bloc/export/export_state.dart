@@ -1,6 +1,36 @@
-part of 'export_bloc.dart';
+abstract class ExportState {
+  final Set<String>? selectedExtensions;
+  final bool isExporting;
+  final String? error;
+  const ExportState(
+      {this.selectedExtensions, this.error, this.isExporting = false});
+}
 
-@immutable
-sealed class ExportState {}
+class ExportInitial extends ExportState {
+  const ExportInitial()
+      : super(isExporting: false, selectedExtensions: const {});
+}
 
-final class ExportInitial extends ExportState {}
+class ExportCancelled extends ExportState {
+  const ExportCancelled();
+}
+
+class ExportExtensionsUpdated extends ExportState {
+  const ExportExtensionsUpdated(Set<String> selectedExtensions)
+      : super(selectedExtensions: selectedExtensions);
+}
+
+class ExportInProgress extends ExportState {
+  const ExportInProgress() : super(isExporting: true);
+}
+
+class ExportSuccess extends ExportState {
+  final int fileCount;
+  final String exportPath;
+
+  const ExportSuccess(this.fileCount, this.exportPath);
+}
+
+class ExportError extends ExportState {
+  const ExportError(String error) : super(error: error);
+}

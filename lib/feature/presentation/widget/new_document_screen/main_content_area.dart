@@ -7,8 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
 
 Widget buildMainContentArea(FileState state, BuildContext context) {
-  final extensions = getFileExtensionsList(state.directoryNode!);
-
   return Expanded(
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -22,7 +20,8 @@ Widget buildMainContentArea(FileState state, BuildContext context) {
         ),
         const SizedBox(width: 13),
         FileExtensionList(
-          extensions: extensions,
+          extensions: getFileExtensionsList(state.directoryNode!),
+          rootDirectory: state.directoryNode!,
         ),
       ],
     ),

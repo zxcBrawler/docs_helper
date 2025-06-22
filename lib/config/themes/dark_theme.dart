@@ -44,7 +44,16 @@ ThemeData get darkTheme {
         labelLarge: TextStyle(color: AppColor.textColor),
         labelSmall: TextStyle(color: AppColor.textColor),
       ),
-
+      tooltipTheme: const TooltipThemeData(
+          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          decoration: BoxDecoration(
+            color: AppColor.focusColor,
+            borderRadius: AppConstants.deaultElementBorderRadius,
+          ),
+          textStyle: TextStyle(
+            color: AppColor.textColor,
+            fontSize: 14,
+          )),
       // Input decoration
 
       // Buttons
