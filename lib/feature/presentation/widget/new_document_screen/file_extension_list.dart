@@ -1,13 +1,13 @@
 import 'package:docs_helper/config/app_constants.dart';
 import 'package:docs_helper/config/colors/colors.dart';
-import 'package:docs_helper/di/service.dart';
+import 'package:docs_helper/core/routes/app_router.dart';
+import 'package:docs_helper/core/routes/routes.dart';
 import 'package:docs_helper/feature/data/model/directory.dart';
 import 'package:docs_helper/feature/presentation/bloc/export/export_bloc.dart';
 import 'package:docs_helper/feature/presentation/bloc/export/export_event.dart';
 import 'package:docs_helper/feature/presentation/bloc/export/export_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 class FileExtensionList extends StatelessWidget {
   final Map<String, int> extensions;
@@ -41,144 +41,156 @@ class FileExtensionList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => service<ExportBloc>(),
-      child: BlocBuilder<ExportBloc, ExportState>(
-        builder: (context, state) {
-          final filteredExtensions = _filteredExtensions(extensions);
-          final totalAllowedFiles = _totalAllowedFiles(filteredExtensions);
-          final selectedFilesCount =
-              _selectedFilesCount(filteredExtensions, state.selectedExtensions);
+    return BlocBuilder<ExportBloc, ExportState>(
+      builder: (context, state) {
+        final filteredExtensions = _filteredExtensions(extensions);
+        final totalAllowedFiles = _totalAllowedFiles(filteredExtensions);
+        final selectedFilesCount =
+            _selectedFilesCount(filteredExtensions, state.selectedExtensions);
+        return Expanded(
+          flex: 3,
+          child: Container(
+            decoration: const BoxDecoration(
+              color: AppColor.secondaryBackground,
+              borderRadius: AppConstants.deaultElementBorderRadius,
+            ),
+            child: Column(
+              children: [
+                _buildExtensionsHeader(
+                    selectedFilesCount, totalAllowedFiles, state),
+                _buildExtensionsList(filteredExtensions, state),
+                _buildExportButtons(state, context),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 
-          return Expanded(
-            flex: 3,
-            child: Container(
-              decoration: const BoxDecoration(
-                color: AppColor.secondaryBackground,
-                borderRadius: AppConstants.deaultElementBorderRadius,
+  Widget _buildExtensionsHeader(
+      int selectedFilesCount, int totalAllowedFiles, ExportState state) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Text(
+            'Choose file extensions to export',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: AppColor.textColor,
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                '${state.selectedExtensions?.length ?? 0} extensions selected',
+                style: const TextStyle(
+                  color: AppColor.iconColor,
+                  fontSize: 14,
+                ),
               ),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const Text(
-                          'Choose file extensions to export',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: AppColor.textColor,
-                          ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              '${state.selectedExtensions?.length ?? 0} extensions selected',
-                              style: const TextStyle(
-                                color: AppColor.iconColor,
-                                fontSize: 14,
-                              ),
-                            ),
-                            Text(
-                              '$selectedFilesCount of $totalAllowedFiles files',
-                              style: const TextStyle(
-                                color: AppColor.iconColor,
-                                fontSize: 14,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: filteredExtensions.length,
-                      itemBuilder: (context, index) {
-                        final entry = filteredExtensions[index];
-                        final extension = entry.key;
-                        final count = entry.value;
-                        return ListTile(
-                          leading: Checkbox(
-                            checkColor: AppColor.textColor,
-                            value:
-                                state.selectedExtensions?.contains(extension) ??
-                                    false,
-                            onChanged: (bool? value) {
-                              context.read<ExportBloc>().add(
-                                    ToggleExtensionSelection(extension),
-                                  );
-                            },
-                          ),
-                          title: Text(extension),
-                          trailing: Text(
-                            '$count file${count == 1 ? '' : 's'}',
-                            style: const TextStyle(
-                              color: AppColor.iconColor,
-                              fontSize: 14,
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextButton(
-                          onPressed: () {
-                            context.read<ExportBloc>().add(ClearSelection());
-                          },
-                          child: const Text('Clear all'),
-                        ),
-                        const SizedBox(width: 16),
-                        ElevatedButton(
-                          onPressed:
-                              (state.selectedExtensions?.isEmpty ?? true) ||
-                                      state is ExportInProgress
-                                  ? null
-                                  : () async {
-                                      context.read<ExportBloc>().add(
-                                            ExportFilesByExtensions(
-                                              rootDirectory,
-                                              state.selectedExtensions!,
-                                            ),
-                                          );
-                                    },
-                          child: SizedBox(
-                            width: 100,
-                            child: AnimatedSwitcher(
-                              duration: const Duration(milliseconds: 300),
-                              child: state is ExportInProgress
-                                  ? const SizedBox(
-                                      width: 20,
-                                      height: 20,
-                                      child: CircularProgressIndicator(),
-                                    )
-                                  : state is ExportSuccess
-                                      ? const Icon(
-                                          LucideIcons.check,
-                                          size: 20,
-                                        )
-                                      : const Text(
-                                          'Export',
-                                        ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
+              Text(
+                '$selectedFilesCount of $totalAllowedFiles files',
+                style: const TextStyle(
+                  color: AppColor.iconColor,
+                  fontSize: 14,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildExtensionsList(
+      List<MapEntry<String, int>> filteredExtensions, ExportState state) {
+    return Expanded(
+      child: ListView.builder(
+        itemCount: filteredExtensions.length,
+        itemBuilder: (context, index) {
+          final entry = filteredExtensions[index];
+          final extension = entry.key;
+          final count = entry.value;
+          return ListTile(
+            leading: Checkbox(
+              checkColor: AppColor.textColor,
+              value: state.selectedExtensions?.contains(extension) ?? false,
+              onChanged: (_) {
+                context.read<ExportBloc>().add(
+                      ToggleExtensionSelection(extension),
+                    );
+              },
+            ),
+            title: Text(extension),
+            trailing: Text(
+              '$count file${count == 1 ? '' : 's'}',
+              style: const TextStyle(
+                color: AppColor.iconColor,
+                fontSize: 14,
               ),
             ),
           );
         },
+      ),
+    );
+  }
+
+  Widget _buildExportButtons(ExportState state, BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          TextButton(
+            onPressed: () {
+              context.read<ExportBloc>().add(ClearSelection());
+            },
+            child: const Text('Clear all'),
+          ),
+          const SizedBox(width: 16),
+          BlocListener<ExportBloc, ExportState>(
+            listener: (context, state) {
+              if (state is ExportSuccess) {
+                router.push(AppPages.exportSuccess.path, extra: state.savePath);
+              }
+
+              if (state is ExportError) {
+                router.push(AppPages.exportError.path, extra: state.error);
+              }
+            },
+            child: ElevatedButton(
+              onPressed: (state.selectedExtensions?.isEmpty ?? true) ||
+                      state is ExportInProgress
+                  ? null
+                  : () async {
+                      context.read<ExportBloc>().add(
+                            ExportFilesByExtensions(
+                                rootDirectory, state.selectedExtensions!),
+                          );
+                    },
+              child: SizedBox(
+                width: 100,
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 300),
+                  child: state is ExportInProgress
+                      ? const SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(),
+                        )
+                      : const Text(
+                          'Export',
+                        ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -26,9 +26,9 @@ class ExportInProgress extends ExportState {
 
 class ExportSuccess extends ExportState {
   final int fileCount;
-  final String exportPath;
+  final String? savePath;
 
-  const ExportSuccess(this.fileCount, this.exportPath);
+  const ExportSuccess(this.fileCount, this.savePath);
 }
 
 class ExportError extends ExportState {

@@ -16,64 +16,71 @@ import 'package:path/path.dart' as path;
 Widget buildTreeView(List<DirectoryNode> nodes, BuildContext context,
     [int depth = 0]) {
   return SingleChildScrollView(
+    physics: const BouncingScrollPhysics(),
     child: Column(
-      children: nodes.map((node) {
-        if (node.isDirectory) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ListTile(
-                splashColor: Colors.transparent,
-                contentPadding: EdgeInsets.only(left: 16.0 * depth),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Column(
+          children: nodes.map((node) {
+            if (node.isDirectory) {
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ListTile(
+                    splashColor: Colors.transparent,
+                    contentPadding: EdgeInsets.only(left: 16.0 * depth),
+                    leading: Icon(
+                      node.isExpanded ? Icons.folder_open : Icons.folder,
+                      color: AppColor.mainAccentColor,
+                    ),
+                    title: Row(
+                      children: [
+                        Text(node.name),
+                        const SizedBox(width: 10),
+                        if (node.children.isNotEmpty)
+                          Text(
+                            '(${node.children.length})',
+                            style: const TextStyle(color: AppColor.iconColor),
+                          ),
+                      ],
+                    ),
+                    trailing: node.children.isNotEmpty
+                        ? Icon(
+                            node.isExpanded
+                                ? LucideIcons.chevronDown
+                                : LucideIcons.chevronRight,
+                          )
+                        : null,
+                    onTap: () {
+                      context.read<FileBloc>().add(
+                            ToggleDirectoryExpansionEvent(node),
+                          );
+                    },
+                  ),
+                  if (node.isExpanded && node.children.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16.0),
+                      child: buildTreeView(node.children, context, depth + 1),
+                    ),
+                ],
+              );
+            } else {
+              return ListTile(
+                hoverColor: Colors.transparent,
+                contentPadding: EdgeInsets.only(left: 16.0 * depth + 40.0),
                 leading: Icon(
-                  node.isExpanded ? Icons.folder_open : Icons.folder,
-                  color: AppColor.mainAccentColor,
+                  size: 24,
+                  IconsConfig.getFileIcon(path.extension(node.path)),
+                  color:
+                      AppConstants.getFileIconColor(path.extension(node.path)),
                 ),
-                title: Row(
-                  children: [
-                    Text(node.name),
-                    const SizedBox(width: 10),
-                    if (node.children.isNotEmpty)
-                      Text(
-                        '(${node.children.length})',
-                        style: const TextStyle(color: AppColor.iconColor),
-                      ),
-                  ],
-                ),
-                trailing: node.children.isNotEmpty
-                    ? Icon(
-                        node.isExpanded
-                            ? LucideIcons.chevronDown
-                            : LucideIcons.chevronRight,
-                      )
-                    : null,
-                onTap: () {
-                  context.read<FileBloc>().add(
-                        ToggleDirectoryExpansionEvent(node),
-                      );
-                },
-              ),
-              if (node.isExpanded && node.children.isNotEmpty)
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0),
-                  child: buildTreeView(node.children, context, depth + 1),
-                ),
-            ],
-          );
-        } else {
-          return ListTile(
-            hoverColor: Colors.transparent,
-            contentPadding: EdgeInsets.only(left: 16.0 * depth + 40.0),
-            leading: Icon(
-              size: 24,
-              IconsConfig.getFileIcon(path.extension(node.path)),
-              color: AppConstants.getFileIconColor(path.extension(node.path)),
-            ),
-            title: Text(node.name),
-            onTap: () => _showFileContent(context, node),
-          );
-        }
-      }).toList(),
+                title: Text(node.name),
+                onTap: () => _showFileContent(context, node),
+              );
+            }
+          }).toList(),
+        ),
+      ],
     ),
   );
 }

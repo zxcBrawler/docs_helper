@@ -5,6 +5,8 @@ import 'package:docs_helper/feature/domain/export_service/export_repository_impl
 import 'package:docs_helper/feature/domain/pick_folder_service/pick_folder_repository.dart';
 import 'package:docs_helper/feature/domain/pick_folder_service/pick_folder_repository_impl.dart';
 import 'package:docs_helper/feature/domain/usecase/copy_to_clipboard_usecase.dart';
+import 'package:docs_helper/feature/domain/usecase/create_pdf_usecase.dart';
+import 'package:docs_helper/feature/domain/usecase/find_code_files_usecase.dart';
 import 'package:docs_helper/feature/domain/usecase/pick_folder_usecase.dart';
 import 'package:docs_helper/feature/presentation/bloc/clipboard/clipboard_bloc.dart';
 import 'package:docs_helper/feature/presentation/bloc/export/export_bloc.dart';
@@ -16,7 +18,7 @@ Future<void> initDependencies() async {
   // bloc
   service.registerFactory<FileBloc>(() => FileBloc(service()));
   service.registerFactory<ClipboardBloc>(() => ClipboardBloc(service()));
-  service.registerFactory<ExportBloc>(() => ExportBloc());
+  service.registerFactory<ExportBloc>(() => ExportBloc(service(), service()));
 
   // repo
   service.registerSingleton<PickFolderRepository>(PickFolderRepositoryImpl());
@@ -27,4 +29,7 @@ Future<void> initDependencies() async {
   service.registerSingleton<PickFolderUsecase>(PickFolderUsecase(service()));
   service.registerSingleton<CopyToClipboardUsecase>(
       CopyToClipboardUsecase(service()));
+  service.registerSingleton<CreatePdfUsecase>(CreatePdfUsecase(service()));
+  service
+      .registerSingleton<FindCodeFilesUsecase>(FindCodeFilesUsecase(service()));
 }

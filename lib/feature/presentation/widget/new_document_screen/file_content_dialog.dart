@@ -56,33 +56,33 @@ class FileContentDialog extends StatelessWidget {
           BlocConsumer<ClipboardBloc, ClipboardState>(
             listener: (context, state) {},
             builder: (context, state) {
-              return AnimatedSwitcher(
-                duration: const Duration(milliseconds: 400),
-                child: state is ClipboardCopied
-                    ? const Text(
-                        'Copied to clipboard!',
-                        style: TextStyle(
-                          color: AppColor.iconColor,
-                          fontSize: 16,
+              return SizedBox(
+                height: 40,
+                child: AnimatedSwitcher(
+                  duration: const Duration(milliseconds: 400),
+                  child: state is ClipboardCopied
+                      ? const Text(
+                          'Copied to clipboard!',
+                          style: TextStyle(
+                            color: AppColor.iconColor,
+                            fontSize: 16,
+                          ),
+                        )
+                      : IconButton(
+                          icon: const Icon(LucideIcons.copy),
+                          onPressed: () {
+                            context.read<ClipboardBloc>().add(
+                                  CopyToClipboard(content),
+                                );
+                          },
                         ),
-                      )
-                    : IconButton(
-                        icon: const Icon(LucideIcons.copy),
-                        onPressed: () {
-                          context.read<ClipboardBloc>().add(
-                                CopyToClipboard(content),
-                              );
-                        },
-                      ),
+                ),
               );
             },
           ),
           TextButton(
             child: const Text(
               'Close',
-              style: TextStyle(
-                fontSize: 16,
-              ),
             ),
             onPressed: () => Navigator.of(context).pop(),
           ),

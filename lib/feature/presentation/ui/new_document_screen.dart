@@ -3,6 +3,8 @@ import 'package:docs_helper/config/colors/colors.dart';
 import 'package:docs_helper/core/custom_widgets/basic_icon_button.dart';
 import 'package:docs_helper/core/routes/app_router.dart';
 import 'package:docs_helper/di/service.dart';
+import 'package:docs_helper/feature/presentation/bloc/export/export_bloc.dart';
+import 'package:docs_helper/feature/presentation/bloc/export/export_state.dart';
 import 'package:docs_helper/feature/presentation/bloc/file/file_bloc.dart';
 import 'package:docs_helper/feature/presentation/bloc/file/file_event.dart';
 import 'package:docs_helper/feature/presentation/bloc/file/file_state.dart';
@@ -16,8 +18,15 @@ class NewDocumentScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => service<FileBloc>(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => service<FileBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => service<ExportBloc>(),
+        ),
+      ],
       child: const _NewDocumentView(),
     );
   }
@@ -41,18 +50,24 @@ class _NewDocumentView extends StatelessWidget {
                   icon: const Icon(LucideIcons.chevronLeft),
                   onPressed: () => router.pop(),
                 ),
-                BlocBuilder<FileBloc, FileState>(
-                  builder: (context, state) {
-                    return ElevatedButton(
-                      onPressed: () {
-                        context.read<FileBloc>().add(const PickFolderEvent());
+                BlocSelector<ExportBloc, ExportState, bool>(
+                  selector: (state) => state is ExportInProgress,
+                  builder: (context, isExporting) {
+                    return BlocSelector<FileBloc, FileState, bool>(
+                      selector: (state) => state is FileLoading,
+                      builder: (context, isLoading) {
+                        return ElevatedButton(
+                          onPressed: (isLoading || isExporting)
+                              ? null
+                              : () => context
+                                  .read<FileBloc>()
+                                  .add(const PickFolderEvent()),
+                          child: const Text('Pick Folder'),
+                        );
                       },
-                      child: const Text(
-                        'Pick Folder',
-                      ),
                     );
                   },
-                ),
+                )
               ],
             ),
             const SizedBox(height: 20),
@@ -67,21 +82,55 @@ class _NewDocumentView extends StatelessWidget {
                         case FileLoading _:
                           return const Center(
                               child: CircularProgressIndicator(
-                            color: AppColor.mainAccentColor,
+                            strokeWidth: 5,
                           ));
                         case DirectoryTreeBuildDone _:
                           return buildMainContentArea(state, context);
                         case FileError _:
-                          return const Center(
-                            child: Text('Folder is not picked',
-                                style: TextStyle(fontSize: 20)),
+                          return const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                LucideIcons.xCircle,
+                                color: AppColor.accentRed,
+                                size: 100,
+                              ),
+                              SizedBox(height: 20),
+                              Text(
+                                'Folder is not picked',
+                                style: TextStyle(fontSize: 24),
+                              ),
+                            ],
                           );
                         default:
-                          return const Center(
-                            child: Text('Select a folder to export to Word',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                )),
+                          return const Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Row(
+                                spacing: 10,
+                                children: [
+                                  Icon(
+                                    LucideIcons.folderClosed,
+                                    color: AppColor.mainAccentColor,
+                                    size: 60,
+                                  ),
+                                  Icon(
+                                    LucideIcons.moveRight,
+                                    size: 60,
+                                  ),
+                                  Icon(
+                                    LucideIcons.fileText,
+                                    color: AppColor.textColor,
+                                    size: 60,
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 20),
+                              Text('Select a folder to export to PDF',
+                                  style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold)),
+                            ],
                           );
                       }
                     },

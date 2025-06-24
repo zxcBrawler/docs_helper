@@ -30,19 +30,32 @@ ThemeData get darkTheme {
 
       // Text
       textTheme: const TextTheme(
-        displayLarge: TextStyle(color: AppColor.textColor),
-        displayMedium: TextStyle(color: AppColor.textColor),
-        displaySmall: TextStyle(color: AppColor.textColor),
-        headlineMedium: TextStyle(color: AppColor.textColor),
-        headlineSmall: TextStyle(color: AppColor.textColor),
-        titleLarge: TextStyle(color: AppColor.textColor),
-        titleMedium: TextStyle(color: AppColor.textColor),
-        titleSmall: TextStyle(color: AppColor.textColor),
-        bodyLarge: TextStyle(color: AppColor.textColor),
-        bodyMedium: TextStyle(color: AppColor.textColor),
-        bodySmall: TextStyle(color: AppColor.textColor),
-        labelLarge: TextStyle(color: AppColor.textColor),
-        labelSmall: TextStyle(color: AppColor.textColor),
+        displayLarge:
+            TextStyle(color: AppColor.textColor, fontFamily: 'RobotoMono'),
+        displayMedium:
+            TextStyle(color: AppColor.textColor, fontFamily: 'RobotoMono'),
+        displaySmall:
+            TextStyle(color: AppColor.textColor, fontFamily: 'RobotoMono'),
+        headlineMedium:
+            TextStyle(color: AppColor.textColor, fontFamily: 'RobotoMono'),
+        headlineSmall:
+            TextStyle(color: AppColor.textColor, fontFamily: 'RobotoMono'),
+        titleLarge:
+            TextStyle(color: AppColor.textColor, fontFamily: 'RobotoMono'),
+        titleMedium:
+            TextStyle(color: AppColor.textColor, fontFamily: 'RobotoMono'),
+        titleSmall:
+            TextStyle(color: AppColor.textColor, fontFamily: 'RobotoMono'),
+        bodyLarge:
+            TextStyle(color: AppColor.textColor, fontFamily: 'RobotoMono'),
+        bodyMedium:
+            TextStyle(color: AppColor.textColor, fontFamily: 'RobotoMono'),
+        bodySmall:
+            TextStyle(color: AppColor.textColor, fontFamily: 'RobotoMono'),
+        labelLarge:
+            TextStyle(color: AppColor.textColor, fontFamily: 'RobotoMono'),
+        labelSmall:
+            TextStyle(color: AppColor.textColor, fontFamily: 'RobotoMono'),
       ),
       tooltipTheme: const TooltipThemeData(
           padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
@@ -51,14 +64,15 @@ ThemeData get darkTheme {
             borderRadius: AppConstants.deaultElementBorderRadius,
           ),
           textStyle: TextStyle(
-            color: AppColor.textColor,
-            fontSize: 14,
-          )),
+              color: AppColor.textColor,
+              fontSize: 14,
+              fontFamily: 'RobotoMono')),
       // Input decoration
 
       // Buttons
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
+          textStyle: const TextStyle(fontSize: 16, fontFamily: 'RobotoMono'),
           backgroundColor: AppColor.mainAccentColor,
           foregroundColor: AppColor.textColor,
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
@@ -71,6 +85,7 @@ ThemeData get darkTheme {
         style: TextButton.styleFrom(
           foregroundColor: AppColor.mainAccentColor,
           padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+          textStyle: const TextStyle(fontSize: 16, fontFamily: 'RobotoMono'),
           shape: const RoundedRectangleBorder(
             borderRadius: AppConstants.deaultElementBorderRadius,
           ),
@@ -104,10 +119,12 @@ ThemeData get darkTheme {
         elevation: 10,
         insetPadding: EdgeInsets.all(16),
         backgroundColor: AppColor.focusColor,
-        contentTextStyle: TextStyle(color: AppColor.textColor, fontSize: 16),
+        contentTextStyle: TextStyle(
+            color: AppColor.textColor, fontSize: 16, fontFamily: 'RobotoMono'),
         shape: RoundedRectangleBorder(
           borderRadius: AppConstants.deaultElementBorderRadius,
         ),
         actionTextColor: AppColor.mainAccentColor,
-      ));
+      ),
+      progressIndicatorTheme: const ProgressIndicatorThemeData(strokeWidth: 2));
 }

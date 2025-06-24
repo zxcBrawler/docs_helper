@@ -1,4 +1,6 @@
 import 'package:docs_helper/core/routes/routes.dart';
+import 'package:docs_helper/feature/presentation/ui/export_failed_screen.dart';
+import 'package:docs_helper/feature/presentation/ui/export_success_screen.dart';
 import 'package:docs_helper/feature/presentation/ui/new_document_screen.dart';
 import 'package:docs_helper/feature/presentation/ui/pages/dashboard.dart';
 import 'package:docs_helper/feature/presentation/ui/main_screen.dart';
@@ -25,6 +27,22 @@ final router = GoRouter(
       path: AppPages.profile.path,
       name: AppPages.profile.name,
       builder: (_, __) => const Profile(),
+    ),
+    GoRoute(
+      path: AppPages.exportSuccess.path,
+      name: AppPages.exportSuccess.name,
+      builder: (context, state) {
+        String fileLocation = state.extra as String;
+        return ExportSuccessScreen(fileLocation: fileLocation);
+      },
+    ),
+    GoRoute(
+      path: AppPages.exportError.path,
+      name: AppPages.exportError.name,
+      builder: (context, state) {
+        String errorMessage = state.extra as String;
+        return ExportFailedScreen(errorMessage: errorMessage);
+      },
     ),
     ShellRoute(
       navigatorKey: _shellNavigatorKey,
