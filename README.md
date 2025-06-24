@@ -16,7 +16,7 @@ A Flutter-based tool for generating PDF documentation from project's source code
 
  - BLoC for state management
 
- - pdf (or your PDF generation package) for creating PDFs
+ - pdf package for creating PDFs
 
  - file_picker for directory selection
 
