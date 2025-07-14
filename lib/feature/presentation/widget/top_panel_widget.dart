@@ -1,5 +1,6 @@
 import 'package:docs_helper/config/app_constants.dart';
 import 'package:docs_helper/core/custom_widgets/basic_icon_button.dart';
+import 'package:docs_helper/core/custom_widgets/theme_switcher.dart';
 import 'package:docs_helper/core/routes/app_router.dart';
 import 'package:docs_helper/core/routes/routes.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +56,8 @@ class _TopBarWidgetState extends State<TopBarWidget> {
                         BasicIconButton(
                             icon: const Icon(LucideIcons.user),
                             onPressed: () {
-                              router.push(AppPages.profile.path);
+                              ThemeSwitcher.of(context).toggleTheme();
+                              //router.push(AppPages.profile.path);
                             },
                             tooltip: 'Profile'),
                       ],
