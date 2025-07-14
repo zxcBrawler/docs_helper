@@ -22,10 +22,10 @@ Widget buildMainContentArea(FileState state, BuildContext context) {
                 decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.surface,
                     borderRadius: AppConstants.deaultElementBorderRadius),
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Text(
+                    const Text(
                       "File Explorer",
                       style: TextStyle(
                         fontSize: 18,
@@ -35,8 +35,8 @@ Widget buildMainContentArea(FileState state, BuildContext context) {
                     Text(
                       "Click on a file to preview it, or expand a folder to see its contents",
                       style: TextStyle(
-                        fontSize: 14,
-                      ),
+                          fontSize: 14,
+                          color: Theme.of(context).iconTheme.color),
                     )
                   ],
                 ),

@@ -1,4 +1,4 @@
-import 'package:docs_helper/config/colors/colors.dart';
+import 'package:docs_helper/config/app_constants.dart';
 import 'package:flutter/material.dart';
 
 class Settings extends StatefulWidget {
@@ -12,7 +12,10 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.secondaryBackground,
+      decoration: BoxDecoration(
+        borderRadius: AppConstants.deaultElementBorderRadius,
+        color: Theme.of(context).colorScheme.surface,
+      ),
     );
   }
 }

@@ -1,5 +1,4 @@
 import 'package:docs_helper/config/app_constants.dart';
-import 'package:docs_helper/config/colors/colors.dart';
 import 'package:docs_helper/di/service.dart';
 import 'package:docs_helper/feature/presentation/bloc/clipboard/clipboard_bloc.dart';
 import 'package:docs_helper/feature/presentation/bloc/clipboard/clipboard_event.dart';
@@ -61,10 +60,10 @@ class FileContentDialog extends StatelessWidget {
                 child: AnimatedSwitcher(
                   duration: const Duration(milliseconds: 400),
                   child: state is ClipboardCopied
-                      ? const Text(
+                      ? Text(
                           'Copied to clipboard!',
                           style: TextStyle(
-                            color: AppColors.iconColor,
+                            color: Theme.of(context).iconTheme.color,
                             fontSize: 16,
                           ),
                         )

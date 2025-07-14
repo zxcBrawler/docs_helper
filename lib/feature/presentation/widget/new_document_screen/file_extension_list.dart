@@ -56,7 +56,7 @@ class FileExtensionList extends StatelessWidget {
             child: Column(
               children: [
                 _buildExtensionsHeader(
-                    selectedFilesCount, totalAllowedFiles, state),
+                    context, selectedFilesCount, totalAllowedFiles, state),
                 _buildExtensionsList(filteredExtensions, state),
                 _buildExportButtons(state, context),
               ],
@@ -67,8 +67,8 @@ class FileExtensionList extends StatelessWidget {
     );
   }
 
-  Widget _buildExtensionsHeader(
-      int selectedFilesCount, int totalAllowedFiles, ExportState state) {
+  Widget _buildExtensionsHeader(BuildContext context, int selectedFilesCount,
+      int totalAllowedFiles, ExportState state) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Row(
@@ -86,15 +86,13 @@ class FileExtensionList extends StatelessWidget {
             children: [
               Text(
                 '${state.selectedExtensions?.length ?? 0} extensions selected',
-                style: const TextStyle(
-                  fontSize: 14,
-                ),
+                style: TextStyle(
+                    fontSize: 14, color: Theme.of(context).iconTheme.color),
               ),
               Text(
                 '$selectedFilesCount of $totalAllowedFiles files',
-                style: const TextStyle(
-                  fontSize: 14,
-                ),
+                style: TextStyle(
+                    fontSize: 14, color: Theme.of(context).iconTheme.color),
               ),
             ],
           ),
@@ -124,9 +122,8 @@ class FileExtensionList extends StatelessWidget {
             title: Text(extension),
             trailing: Text(
               '$count file${count == 1 ? '' : 's'}',
-              style: const TextStyle(
-                fontSize: 14,
-              ),
+              style: TextStyle(
+                  fontSize: 14, color: Theme.of(context).iconTheme.color),
             ),
           );
         },

@@ -40,8 +40,8 @@ Widget buildTreeView(List<DirectoryNode> nodes, BuildContext context,
                         if (node.children.isNotEmpty)
                           Text(
                             '(${node.children.length})',
-                            style: const TextStyle(
-                                color: AppColors.iconColorLight),
+                            style: TextStyle(
+                                color: Theme.of(context).iconTheme.color),
                           ),
                       ],
                     ),

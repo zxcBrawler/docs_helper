@@ -21,7 +21,6 @@ class _ProfileState extends State<Profile> {
           BasicIconButton(
               icon: const Icon(
                 LucideIcons.chevronLeft,
-                color: AppColors.iconColor,
               ),
               onPressed: () {
                 router.pop();
