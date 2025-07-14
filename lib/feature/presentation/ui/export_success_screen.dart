@@ -24,7 +24,7 @@ class _ExportSuccessScreenState extends State<ExportSuccessScreen> {
           children: [
             const Icon(
               LucideIcons.checkCircle,
-              color: AppColor.accentGreen,
+              color: AppColors.accentGreen,
               size: 100,
             ),
             const SizedBox(height: 20),
@@ -56,7 +56,7 @@ class _ExportSuccessScreenState extends State<ExportSuccessScreen> {
                     style: const TextStyle(
                       fontSize: 16,
                       fontStyle: FontStyle.italic,
-                      color: AppColor.mainAccentColor,
+                      color: AppColors.mainAccentColor,
                       decoration: TextDecoration.underline,
                     ),
                   ),

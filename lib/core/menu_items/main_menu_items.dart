@@ -1,7 +1,5 @@
-import 'dart:ui';
-
-import 'package:docs_helper/config/colors/colors.dart';
 import 'package:docs_helper/core/routes/routes.dart';
+import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 List<Map<String, dynamic>> menuItems = [
@@ -27,10 +25,13 @@ List<Map<String, dynamic>> menuItems = [
   },
 ];
 
-Color applyMenuItemStyle(bool isSelected, bool isHovered) {
+Color applyMenuItemStyle(
+    BuildContext context, bool isSelected, bool isHovered) {
+  final colorScheme = Theme.of(context).colorScheme;
+  final iconColor = Theme.of(context).iconTheme.color!;
   return isSelected
-      ? AppColor.textColor
+      ? colorScheme.onSurface
       : isHovered
-          ? AppColor.textColor
-          : AppColor.iconColor;
+          ? colorScheme.onSurface
+          : iconColor;
 }

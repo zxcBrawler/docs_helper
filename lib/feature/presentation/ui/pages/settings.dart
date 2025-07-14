@@ -12,7 +12,7 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColor.secondaryBackground,
+      color: AppColors.secondaryBackground,
     );
   }
 }

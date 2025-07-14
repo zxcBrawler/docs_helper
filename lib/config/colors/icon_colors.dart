@@ -47,7 +47,7 @@ class IconsConfig {
   };
 
   static Color getColorForLanguage(String language) {
-    return _languageColors[language.toLowerCase()] ?? AppColor.iconColor;
+    return _languageColors[language.toLowerCase()] ?? AppColors.iconColor;
   }
 
   static IconData getFileIcon(String extension) {

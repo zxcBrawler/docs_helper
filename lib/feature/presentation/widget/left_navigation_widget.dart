@@ -1,5 +1,4 @@
 import 'package:docs_helper/config/app_constants.dart';
-import 'package:docs_helper/config/colors/colors.dart';
 import 'package:docs_helper/core/menu_items/main_menu_items.dart';
 import 'package:docs_helper/core/routes/app_router.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +19,8 @@ class _LeftNavigationPanelState extends State<LeftNavigationPanel> {
     return ClipRRect(
       borderRadius: AppConstants.deaultElementBorderRadius,
       child: Container(
+        color: Theme.of(context).colorScheme.surface,
         width: 250,
-        color: AppColor.secondaryBackground,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
@@ -46,11 +45,9 @@ class _LeftNavigationPanelState extends State<LeftNavigationPanel> {
                             decoration: BoxDecoration(
                               borderRadius:
                                   AppConstants.deaultElementBorderRadius,
-                              color: isSelected
-                                  ? AppColor.focusColor
-                                  : isHovered
-                                      ? AppColor.focusColor
-                                      : Colors.transparent,
+                              color: isSelected || isHovered
+                                  ? Theme.of(context).focusColor
+                                  : Colors.transparent,
                             ),
                             padding: const EdgeInsets.all(10),
                             child: Row(
@@ -60,7 +57,7 @@ class _LeftNavigationPanelState extends State<LeftNavigationPanel> {
                                   child: Icon(
                                     menuItems[index]['icon'],
                                     color: applyMenuItemStyle(
-                                        isSelected, isHovered),
+                                        context, isSelected, isHovered),
                                   ),
                                 ),
                                 Text(
@@ -69,7 +66,7 @@ class _LeftNavigationPanelState extends State<LeftNavigationPanel> {
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                     color: applyMenuItemStyle(
-                                        isSelected, isHovered),
+                                        context, isSelected, isHovered),
                                   ),
                                 ),
                               ],

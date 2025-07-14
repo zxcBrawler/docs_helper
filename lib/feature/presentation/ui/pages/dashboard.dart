@@ -1,5 +1,4 @@
 import 'package:docs_helper/config/app_constants.dart';
-import 'package:docs_helper/config/colors/colors.dart';
 import 'package:flutter/material.dart';
 
 class Dashboard extends StatefulWidget {
@@ -21,9 +20,9 @@ class _DashboardState extends State<Dashboard> {
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 10),
                 child: Container(
-                  decoration: const BoxDecoration(
-                    color: AppColor.secondaryBackground,
+                  decoration: BoxDecoration(
                     borderRadius: AppConstants.deaultElementBorderRadius,
+                    color: Theme.of(context).colorScheme.surface,
                   ),
                 ),
               ),
@@ -37,9 +36,9 @@ class _DashboardState extends State<Dashboard> {
                 child: Padding(
                   padding: const EdgeInsets.only(right: 10),
                   child: Container(
-                    decoration: const BoxDecoration(
-                      color: AppColor.secondaryBackground,
+                    decoration: BoxDecoration(
                       borderRadius: AppConstants.deaultElementBorderRadius,
+                      color: Theme.of(context).colorScheme.surface,
                     ),
                   ),
                 ),
@@ -48,18 +47,18 @@ class _DashboardState extends State<Dashboard> {
                 child: Padding(
                   padding: const EdgeInsets.only(right: 10),
                   child: Container(
-                    decoration: const BoxDecoration(
-                      color: AppColor.secondaryBackground,
+                    decoration: BoxDecoration(
                       borderRadius: AppConstants.deaultElementBorderRadius,
+                      color: Theme.of(context).colorScheme.surface,
                     ),
                   ),
                 ),
               ),
               Expanded(
                 child: Container(
-                  decoration: const BoxDecoration(
-                    color: AppColor.secondaryBackground,
+                  decoration: BoxDecoration(
                     borderRadius: AppConstants.deaultElementBorderRadius,
+                    color: Theme.of(context).colorScheme.surface,
                   ),
                 ),
               ),

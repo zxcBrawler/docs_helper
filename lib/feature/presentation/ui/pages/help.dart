@@ -12,7 +12,7 @@ class _HelpAndSupportState extends State<HelpAndSupport> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColor.secondaryBackground,
+      color: AppColors.secondaryBackground,
     );
   }
 }

@@ -1,5 +1,4 @@
 import 'package:docs_helper/config/app_constants.dart';
-import 'package:docs_helper/config/colors/colors.dart';
 import 'package:docs_helper/core/routes/app_router.dart';
 import 'package:docs_helper/core/routes/routes.dart';
 import 'package:docs_helper/feature/data/model/directory.dart';
@@ -50,9 +49,9 @@ class FileExtensionList extends StatelessWidget {
         return Expanded(
           flex: 3,
           child: Container(
-            decoration: const BoxDecoration(
-              color: AppColor.secondaryBackground,
+            decoration: BoxDecoration(
               borderRadius: AppConstants.deaultElementBorderRadius,
+              color: Theme.of(context).colorScheme.surface,
             ),
             child: Column(
               children: [
@@ -80,7 +79,6 @@ class FileExtensionList extends StatelessWidget {
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: AppColor.textColor,
             ),
           ),
           Column(
@@ -89,14 +87,12 @@ class FileExtensionList extends StatelessWidget {
               Text(
                 '${state.selectedExtensions?.length ?? 0} extensions selected',
                 style: const TextStyle(
-                  color: AppColor.iconColor,
                   fontSize: 14,
                 ),
               ),
               Text(
                 '$selectedFilesCount of $totalAllowedFiles files',
                 style: const TextStyle(
-                  color: AppColor.iconColor,
                   fontSize: 14,
                 ),
               ),
@@ -118,7 +114,6 @@ class FileExtensionList extends StatelessWidget {
           final count = entry.value;
           return ListTile(
             leading: Checkbox(
-              checkColor: AppColor.textColor,
               value: state.selectedExtensions?.contains(extension) ?? false,
               onChanged: (_) {
                 context.read<ExportBloc>().add(
@@ -130,7 +125,6 @@ class FileExtensionList extends StatelessWidget {
             trailing: Text(
               '$count file${count == 1 ? '' : 's'}',
               style: const TextStyle(
-                color: AppColor.iconColor,
                 fontSize: 14,
               ),
             ),

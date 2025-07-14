@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_highlight/flutter_highlight.dart';
 import 'package:flutter_highlight/themes/atom-one-dark.dart';
+import 'package:flutter_highlight/themes/atom-one-light.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 class FileContentDialog extends StatelessWidget {
@@ -25,10 +26,8 @@ class FileContentDialog extends StatelessWidget {
     return BlocProvider(
       create: (context) => service<ClipboardBloc>(),
       child: AlertDialog(
-        backgroundColor: AppColor.secondaryBackground,
         title: Text(
           fileName,
-          style: const TextStyle(color: AppColor.textColor),
         ),
         content: ClipRRect(
           borderRadius: AppConstants.deaultElementBorderRadius,
@@ -41,12 +40,13 @@ class FileContentDialog extends StatelessWidget {
               child: HighlightView(
                 content,
                 language: AppConstants.getLanguageFromExtension(extension),
-                theme: atomOneDarkTheme,
+                theme: Theme.of(context).brightness == Brightness.dark
+                    ? atomOneDarkTheme
+                    : atomOneLightTheme,
                 padding: const EdgeInsets.all(12),
                 textStyle: const TextStyle(
                   fontSize: 14,
                   fontFamily: 'RobotoMono',
-                  color: AppColor.textColor,
                 ),
               ),
             ),
@@ -64,7 +64,7 @@ class FileContentDialog extends StatelessWidget {
                       ? const Text(
                           'Copied to clipboard!',
                           style: TextStyle(
-                            color: AppColor.iconColor,
+                            color: AppColors.iconColor,
                             fontSize: 16,
                           ),
                         )

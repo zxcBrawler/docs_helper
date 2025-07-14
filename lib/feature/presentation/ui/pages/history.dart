@@ -12,7 +12,7 @@ class _HistoryState extends State<History> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColor.mainAccentColor,
+      color: AppColors.mainAccentColor,
     );
   }
 }

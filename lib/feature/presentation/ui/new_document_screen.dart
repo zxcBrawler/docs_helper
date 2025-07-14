@@ -38,7 +38,6 @@ class _NewDocumentView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.primaryBackground,
       body: Padding(
         padding: AppConstants.defaultOuterPadding,
         child: Column(
@@ -92,7 +91,7 @@ class _NewDocumentView extends StatelessWidget {
                             children: [
                               Icon(
                                 LucideIcons.xCircle,
-                                color: AppColor.accentRed,
+                                color: AppColors.accentRed,
                                 size: 100,
                               ),
                               SizedBox(height: 20),
@@ -111,7 +110,7 @@ class _NewDocumentView extends StatelessWidget {
                                 children: [
                                   Icon(
                                     LucideIcons.folderClosed,
-                                    color: AppColor.mainAccentColor,
+                                    color: AppColors.mainAccentColor,
                                     size: 60,
                                   ),
                                   Icon(
@@ -120,7 +119,6 @@ class _NewDocumentView extends StatelessWidget {
                                   ),
                                   Icon(
                                     LucideIcons.fileText,
-                                    color: AppColor.textColor,
                                     size: 60,
                                   ),
                                 ],

@@ -2,27 +2,27 @@ import 'package:docs_helper/config/app_constants.dart';
 import 'package:docs_helper/config/colors/colors.dart';
 import 'package:flutter/material.dart';
 
-ThemeData get darkTheme {
-  return ThemeData.dark().copyWith(
+ThemeData get lightTheme {
+  return ThemeData.light().copyWith(
       // Color scheme
-      colorScheme: const ColorScheme.dark(
+      colorScheme: const ColorScheme.light(
         primary: AppColors.mainAccentColor,
         secondary: AppColors.mainAccentColor,
-        surface: AppColors.secondaryBackground,
-        onSurface: AppColors.textColor,
+        surface: AppColors.secondaryBackgroundLight,
+        onSurface: AppColors.textColorLight,
       ),
 
       // Scaffold
-      scaffoldBackgroundColor: AppColors.primaryBackground,
-      canvasColor: AppColors.secondaryBackground,
+      scaffoldBackgroundColor: AppColors.primaryBackgroundLight,
+      canvasColor: AppColors.secondaryBackgroundLight,
 
       // AppBar
       appBarTheme: const AppBarTheme(
-        color: AppColors.secondaryBackground,
+        color: AppColors.secondaryBackgroundLight,
         elevation: 0,
-        iconTheme: IconThemeData(color: AppColors.iconColor),
+        iconTheme: IconThemeData(color: AppColors.iconColorLight),
         titleTextStyle: TextStyle(
-          color: AppColors.textColor,
+          color: AppColors.textColorLight,
           fontSize: 20,
           fontWeight: FontWeight.bold,
         ),
@@ -30,41 +30,41 @@ ThemeData get darkTheme {
 
       // Text
       textTheme: const TextTheme(
-        displayLarge:
-            TextStyle(color: AppColors.textColor, fontFamily: 'RobotoMono'),
-        displayMedium:
-            TextStyle(color: AppColors.textColor, fontFamily: 'RobotoMono'),
-        displaySmall:
-            TextStyle(color: AppColors.textColor, fontFamily: 'RobotoMono'),
-        headlineMedium:
-            TextStyle(color: AppColors.textColor, fontFamily: 'RobotoMono'),
-        headlineSmall:
-            TextStyle(color: AppColors.textColor, fontFamily: 'RobotoMono'),
-        titleLarge:
-            TextStyle(color: AppColors.textColor, fontFamily: 'RobotoMono'),
-        titleMedium:
-            TextStyle(color: AppColors.textColor, fontFamily: 'RobotoMono'),
-        titleSmall:
-            TextStyle(color: AppColors.textColor, fontFamily: 'RobotoMono'),
-        bodyLarge:
-            TextStyle(color: AppColors.textColor, fontFamily: 'RobotoMono'),
-        bodyMedium:
-            TextStyle(color: AppColors.textColor, fontFamily: 'RobotoMono'),
-        bodySmall:
-            TextStyle(color: AppColors.textColor, fontFamily: 'RobotoMono'),
-        labelLarge:
-            TextStyle(color: AppColors.textColor, fontFamily: 'RobotoMono'),
-        labelSmall:
-            TextStyle(color: AppColors.textColor, fontFamily: 'RobotoMono'),
+        displayLarge: TextStyle(
+            color: AppColors.textColorLight, fontFamily: 'RobotoMono'),
+        displayMedium: TextStyle(
+            color: AppColors.textColorLight, fontFamily: 'RobotoMono'),
+        displaySmall: TextStyle(
+            color: AppColors.textColorLight, fontFamily: 'RobotoMono'),
+        headlineMedium: TextStyle(
+            color: AppColors.textColorLight, fontFamily: 'RobotoMono'),
+        headlineSmall: TextStyle(
+            color: AppColors.textColorLight, fontFamily: 'RobotoMono'),
+        titleLarge: TextStyle(
+            color: AppColors.textColorLight, fontFamily: 'RobotoMono'),
+        titleMedium: TextStyle(
+            color: AppColors.textColorLight, fontFamily: 'RobotoMono'),
+        titleSmall: TextStyle(
+            color: AppColors.textColorLight, fontFamily: 'RobotoMono'),
+        bodyLarge: TextStyle(
+            color: AppColors.textColorLight, fontFamily: 'RobotoMono'),
+        bodyMedium: TextStyle(
+            color: AppColors.textColorLight, fontFamily: 'RobotoMono'),
+        bodySmall: TextStyle(
+            color: AppColors.textColorLight, fontFamily: 'RobotoMono'),
+        labelLarge: TextStyle(
+            color: AppColors.textColorLight, fontFamily: 'RobotoMono'),
+        labelSmall: TextStyle(
+            color: AppColors.textColorLight, fontFamily: 'RobotoMono'),
       ),
       tooltipTheme: const TooltipThemeData(
           padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
           decoration: BoxDecoration(
-            color: AppColors.focusColor,
+            color: AppColors.focusColorLight,
             borderRadius: AppConstants.deaultElementBorderRadius,
           ),
           textStyle: TextStyle(
-              color: AppColors.textColor,
+              color: AppColors.textColorLight,
               fontSize: 14,
               fontFamily: 'RobotoMono')),
       // Input decoration
@@ -94,7 +94,7 @@ ThemeData get darkTheme {
 
       // Card
       cardTheme: const CardThemeData(
-        color: AppColors.secondaryBackground,
+        color: AppColors.secondaryBackgroundLight,
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
           borderRadius: AppConstants.deaultElementBorderRadius,
@@ -104,7 +104,7 @@ ThemeData get darkTheme {
 
       // Dialog
       dialogTheme: const DialogThemeData(
-        backgroundColor: AppColors.secondaryBackground,
+        backgroundColor: AppColors.secondaryBackgroundLight,
         shape: RoundedRectangleBorder(
           borderRadius: AppConstants.deaultElementBorderRadius,
         ),
@@ -112,15 +112,17 @@ ThemeData get darkTheme {
 
       // Other components
       iconTheme: const IconThemeData(
-        color: AppColors.iconColor,
+        color: AppColors.iconColorLight,
       ),
       snackBarTheme: const SnackBarThemeData(
         behavior: SnackBarBehavior.floating,
         elevation: 10,
         insetPadding: EdgeInsets.all(16),
-        backgroundColor: AppColors.focusColor,
+        backgroundColor: AppColors.focusColorLight,
         contentTextStyle: TextStyle(
-            color: AppColors.textColor, fontSize: 16, fontFamily: 'RobotoMono'),
+            color: AppColors.textColorLight,
+            fontSize: 16,
+            fontFamily: 'RobotoMono'),
         shape: RoundedRectangleBorder(
           borderRadius: AppConstants.deaultElementBorderRadius,
         ),

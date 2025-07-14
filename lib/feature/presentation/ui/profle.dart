@@ -15,13 +15,13 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.primaryBackground,
+      backgroundColor: AppColors.primaryBackground,
       body: Column(
         children: [
           BasicIconButton(
               icon: const Icon(
                 LucideIcons.chevronLeft,
-                color: AppColor.iconColor,
+                color: AppColors.iconColor,
               ),
               onPressed: () {
                 router.pop();

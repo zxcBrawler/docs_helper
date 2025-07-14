@@ -1,5 +1,4 @@
 import 'package:docs_helper/config/app_constants.dart';
-import 'package:docs_helper/config/colors/colors.dart';
 import 'package:docs_helper/feature/data/model/directory.dart';
 import 'package:docs_helper/feature/presentation/bloc/file/file_state.dart';
 import 'package:docs_helper/feature/presentation/widget/new_document_screen/file_extension_list.dart';
@@ -20,8 +19,8 @@ Widget buildMainContentArea(FileState state, BuildContext context) {
             children: [
               Container(
                 padding: const EdgeInsets.all(16),
-                decoration: const BoxDecoration(
-                    color: AppColor.secondaryBackground,
+                decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.surface,
                     borderRadius: AppConstants.deaultElementBorderRadius),
                 child: const Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -31,14 +30,12 @@ Widget buildMainContentArea(FileState state, BuildContext context) {
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: AppColor.textColor,
                       ),
                     ),
                     Text(
                       "Click on a file to preview it, or expand a folder to see its contents",
                       style: TextStyle(
                         fontSize: 14,
-                        color: AppColor.iconColor,
                       ),
                     )
                   ],
@@ -48,9 +45,9 @@ Widget buildMainContentArea(FileState state, BuildContext context) {
               Expanded(
                 child: Container(
                   padding: const EdgeInsets.all(16),
-                  decoration: const BoxDecoration(
-                    color: AppColor.secondaryBackground,
+                  decoration: BoxDecoration(
                     borderRadius: AppConstants.deaultElementBorderRadius,
+                    color: Theme.of(context).colorScheme.surface,
                   ),
                   child: buildTreeView(
                     [state.directoryNode!],

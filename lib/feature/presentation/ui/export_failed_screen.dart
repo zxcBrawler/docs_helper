@@ -21,7 +21,7 @@ class _ExportFailedScreenState extends State<ExportFailedScreen> {
           children: [
             const Icon(
               LucideIcons.xCircle,
-              color: AppColor.accentRed,
+              color: AppColors.accentRed,
               size: 100,
             ),
             const SizedBox(height: 20),

@@ -1,5 +1,4 @@
 import 'package:docs_helper/config/app_constants.dart';
-import 'package:docs_helper/config/colors/colors.dart';
 import 'package:docs_helper/core/custom_widgets/basic_icon_button.dart';
 import 'package:docs_helper/core/routes/app_router.dart';
 import 'package:docs_helper/core/routes/routes.dart';
@@ -21,8 +20,8 @@ class _TopBarWidgetState extends State<TopBarWidget> {
       child: ClipRRect(
         borderRadius: AppConstants.deaultElementBorderRadius,
         child: Container(
+          color: Theme.of(context).colorScheme.surface,
           height: 65,
-          color: AppColor.secondaryBackground,
           child: Padding(
             padding: const EdgeInsets.all(10.0),
             child: Row(
