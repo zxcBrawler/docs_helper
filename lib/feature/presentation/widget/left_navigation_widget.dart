@@ -15,6 +15,29 @@ class _LeftNavigationPanelState extends State<LeftNavigationPanel> {
   int _hoveredIndex = -1;
 
   @override
+  void initState() {
+    super.initState();
+    _updateSelectedIndex();
+    router.routerDelegate.addListener(_updateSelectedIndex);
+  }
+
+  @override
+  void dispose() {
+    router.routerDelegate.removeListener(_updateSelectedIndex);
+    super.dispose();
+  }
+
+  void _updateSelectedIndex() {
+    final currentRoute = router.routeInformationProvider.value.uri.path;
+    final index = menuItems.indexWhere((item) => item['route'] == currentRoute);
+    if (index != -1 && index != _selectedIndex) {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: AppConstants.deaultElementBorderRadius,
@@ -38,7 +61,6 @@ class _LeftNavigationPanelState extends State<LeftNavigationPanel> {
                         onExit: (_) => setState(() => _hoveredIndex = -1),
                         child: GestureDetector(
                           onTap: () => setState(() {
-                            _selectedIndex = index;
                             router.go(menuItems[index]['route']);
                           }),
                           child: Container(

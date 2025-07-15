@@ -1,4 +1,3 @@
-import 'package:docs_helper/config/colors/colors.dart';
 import 'package:docs_helper/core/custom_widgets/basic_icon_button.dart';
 import 'package:docs_helper/core/routes/app_router.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +14,6 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.primaryBackground,
       body: Column(
         children: [
           BasicIconButton(

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:docs_helper/feature/data/model/directory.dart';
+import 'package:docs_helper/feature/data/model/document.dart';
 import 'package:flutter/services.dart';
 import 'package:path/path.dart' as p;
 import 'package:pdf/pdf.dart';
@@ -104,5 +105,11 @@ class ExportRepositoryImpl implements ExportRepository {
     }
 
     return codeFiles;
+  }
+
+  @override
+  Future<Document> saveExportedDocumentLocally(List<String> documentContents) {
+    // TODO: implement saveExportedDocumentLocally
+    throw UnimplementedError();
   }
 }

@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:docs_helper/feature/data/dto/create_document_dto.dart';
+import 'package:docs_helper/feature/domain/usecase/create_document_usecase.dart';
 import 'package:docs_helper/feature/domain/usecase/create_pdf_usecase.dart';
 import 'package:docs_helper/feature/domain/usecase/find_code_files_usecase.dart';
 import 'package:docs_helper/feature/presentation/bloc/export/export_event.dart';
@@ -11,8 +13,10 @@ import 'package:open_file/open_file.dart';
 class ExportBloc extends Bloc<ExportEvent, ExportState> {
   final CreatePdfUsecase _createPdfUsecase;
   final FindCodeFilesUsecase _findCodeFilesUsecase;
+  final CreateDocumentUsecase _createDocumentUsecase;
   Timer? _resetTimer;
-  ExportBloc(this._createPdfUsecase, this._findCodeFilesUsecase)
+  ExportBloc(this._createPdfUsecase, this._findCodeFilesUsecase,
+      this._createDocumentUsecase)
       : super(const ExportInitial()) {
     on<ExportFilesByExtensions>(_onExportFilesByExtensions);
     on<ToggleExtensionSelection>(_onToggleExtensionSelection);
@@ -64,8 +68,16 @@ class ExportBloc extends Bloc<ExportEvent, ExportState> {
 
       final pdfFile =
           await _createPdfUsecase.call(params: {codeFiles: savePath});
-      OpenFile.open(pdfFile.path);
 
+      final CreateDocumentDto createDocumentDto = CreateDocumentDto();
+      createDocumentDto.name =
+          pdfFile.path.split('\\').last.replaceAll('.pdf', '');
+      createDocumentDto.exportPath = savePath;
+      createDocumentDto.projectFiles = codeFiles;
+      createDocumentDto.projectType = "";
+
+      await _createDocumentUsecase.call(params: createDocumentDto);
+      OpenFile.open(pdfFile.path);
       emit(ExportSuccess(codeFiles.length, savePath));
 
       _resetTimer?.cancel();
